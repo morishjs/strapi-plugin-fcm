@@ -1,6 +1,7 @@
 "use strict";
 
 const admin = require("firebase-admin");
+const { Messaging } = require('firebase-admin/messaging');
 
 module.exports = {
     /*
@@ -42,7 +43,17 @@ module.exports = {
             if (tokens.length > 1) {
                 res = await admin.messaging().sendMulticast({ tokens }, payload, options);
             } else {
-                res = await admin.messaging().sendToDevice(entry.target, payload, options);
+                // Migrate legacy api to v1 api (Firebase)
+                // res = await admin.messaging().sendToDevice(entry.target, payload, options);
+                await admin.messaging().send({
+                  notification: {
+                    title: entry.title,
+                    body: entry.body,
+                    imageUrl: entry.image
+                  },
+                  data: entry.payload.data,
+                  token: entry.target,
+                })
             }
         } else {
             const topics = entry.target.split(',');
