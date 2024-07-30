@@ -20,16 +20,6 @@
 
 ## Installation
 
-### From NPM:
-```bash
-npm install strapi-plugin-fcm
-```
-
-### From YARN:
-```bash
-yarn add strapi-plugin-fcm
-```
-
 ### From Git:
 
 1. Clone the plugin into your Strapi project
