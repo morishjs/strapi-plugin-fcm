@@ -56,7 +56,9 @@ module.exports = {
                       "apns-priority": "10"
                     },
                     payload: {
-                      sound: "default"
+                      aps: {
+                        sound: "default",
+                      },
                     }
                   },
                   android: {
