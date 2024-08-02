@@ -51,6 +51,9 @@ module.exports = {
                     body: entry.body,
                     imageUrl: entry.image
                   },
+                  android: {
+                    priority: "high"
+                  },
                   data: entry.payload.data,
                   token: entry.target,
                 })
