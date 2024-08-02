@@ -52,7 +52,11 @@ module.exports = {
                     imageUrl: entry.image
                   },
                   android: {
-                    priority: "high"
+                    notification: {
+                      defaultSound: true,
+                      defaultVibrateTimings: true,
+                    },
+                    priority: "high",
                   },
                   data: entry.payload.data,
                   token: entry.target,
