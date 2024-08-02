@@ -51,11 +51,15 @@ module.exports = {
                     body: entry.body,
                     imageUrl: entry.image
                   },
-                  android: {
-                    notification: {
-                      defaultSound: true,
-                      defaultVibrateTimings: true,
+                  apns: {
+                    headers: {
+                      "apns-priority": "10"
                     },
+                    payload: {
+                      sound: "default"
+                    }
+                  },
+                  android: {
                     priority: "high",
                   },
                   data: entry.payload.data,
