@@ -43,8 +43,9 @@ module.exports = {
             if (tokens.length > 1) {
                 res = await admin.messaging().sendMulticast({ tokens }, payload, options);
             } else {
-                // Migrate legacy api to v1 api (Firebase)
-                // res = await admin.messaging().sendToDevice(entry.target, payload, options);
+              // Migrate legacy api to v1 api (Firebase)
+              // res = await admin.messaging().sendToDevice(entry.target, payload, options);
+              try {
                 await admin.messaging().send({
                   notification: {
                     title: entry.title,
@@ -66,7 +67,10 @@ module.exports = {
                   },
                   data: entry.payload.data,
                   token: entry.target,
-                })
+                });
+              } catch (error) {
+                console.error(`Error sending message to token: ${entry.target}`, error);
+              }
             }
         } else {
             const topics = entry.target.split(',');
