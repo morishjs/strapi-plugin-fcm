@@ -47,11 +47,13 @@ module.exports = {
               // res = await admin.messaging().sendToDevice(entry.target, payload, options);
               try {
                 await admin.messaging().send({
-                  notification: {
-                    title: entry.title,
-                    body: entry.body,
-                    imageUrl: entry.image
-                  },
+                  ...(entry.payload.notification && {
+                    notification: {
+                      title: entry.payload.notification.title,
+                      body: entry.payload.notification.body,
+                      imageUrl: entry.payload.notification.image
+                    }
+                  }),
                   apns: {
                     headers: {
                       "apns-priority": "10"
