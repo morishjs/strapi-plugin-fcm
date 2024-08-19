@@ -11,22 +11,11 @@ module.exports = {
     * */
     send: async (entry) => {
         console.log('send to FCM', entry);
-        let payload = {
-            notification: {
-              title: entry.title
-            }
-        };
-        if (entry.body) {
-            payload.notification.body = entry.body;
-        }
-        if (entry.image) {
-            payload.notification.imageUrl = entry.image;
-        }
+        let payload = {}
 
         if (entry.payload) {
           try {
-            let jsonPayload = JSON.parse(entry.payload);
-            payload = { ...payload, ...jsonPayload };
+            payload = { ...entry.payload };
           } catch {
             console.log("parsing failed so sending without payload")
           }
@@ -47,11 +36,7 @@ module.exports = {
               // res = await admin.messaging().sendToDevice(entry.target, payload, options);
               try {
                 await admin.messaging().send({
-                  notification: {
-                    title: entry.title,
-                    body: entry.body,
-                    imageUrl: entry.image
-                  },
+                  ...payload,
                   apns: {
                     headers: {
                       "apns-priority": "10"
@@ -65,7 +50,6 @@ module.exports = {
                   android: {
                     priority: "high",
                   },
-                  data: entry.payload.data,
                   token: entry.target,
                 });
               } catch (error) {
